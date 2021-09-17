@@ -1,0 +1,14 @@
+Message[302] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 64 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 66 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 68 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 70 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 73 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 98 : Using default destination of 1 (file).
+Message[305] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 105 : Using default destination of 1 (file).
+Warning[207] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 112 : Found label after column 1. (continueIncrement)
+Message[305] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 122 : Using default destination of 1 (file).
+Warning[207] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 129 : Found label after column 1. (continueDecrement)
+Message[305] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 139 : Using default destination of 1 (file).
+Message[305] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 186 : Using default destination of 1 (file).
+Warning[207] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 191 : Found label after column 1. (incrementPulse)
+Message[305] C:\USERS\CADUG\DESKTOP\MMC\ATIVIDADE3_4\SOFTWARE\ATIVIDADE3_4.X\MAIN.ASM 192 : Using default destination of 1 (file).

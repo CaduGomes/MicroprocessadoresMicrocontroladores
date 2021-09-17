@@ -1,0 +1,58 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Tue Jul 20 14:08:04 2021
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x0000a8
+.config_2007_BUILD/DEFAULT/PRODUCTION/MAIN.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x000057      
+                            0x002007    0x002007      
+            88 out of 8454 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             _.org_1_0024   0x000024    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+             _.org_1_0026   0x000026    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                    conta   0x00001e    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                 delay_ms   0x00001d    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                   inicio   0x000031    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                  int_rb0   0x00000f    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                     loop   0x000052    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                  sai_int   0x000014    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+              sai_int_rb0   0x000013    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+           salva_contexto   0x000004    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+            trata_entrada   0x00002a    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                    volta   0x000011    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+           salva_contexto   0x000004    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                  int_rb0   0x00000f    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                    volta   0x000011    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+              sai_int_rb0   0x000013    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                  sai_int   0x000014    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                 delay_ms   0x00001d    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                    conta   0x00001e    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+             _.org_1_0024   0x000024    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+             _.org_1_0026   0x000026    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+            trata_entrada   0x00002a    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                   inicio   0x000031    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+                     loop   0x000052    program     static C:\Users\cadug\Desktop\MMC\prensa\software\main.X\main.asm
+
+

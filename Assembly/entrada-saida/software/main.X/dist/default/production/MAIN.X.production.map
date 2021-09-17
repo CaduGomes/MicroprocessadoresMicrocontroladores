@@ -1,0 +1,46 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Tue Jul 13 15:22:04 2021
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x00005a
+                   .cinit    romdata   0x00002d    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/MAIN.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00002e      
+                            0x002007    0x002007      
+            48 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    Delay   0x000001    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                   denovo   0x000003    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                   inicio   0x00000c    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                      lig   0x000026    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                     loop   0x000021    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                   repete   0x000008    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                      sai   0x00000b    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    Delay   0x000001    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                   denovo   0x000003    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                   repete   0x000008    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                      sai   0x00000b    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                   inicio   0x00000c    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                     loop   0x000021    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+                      lig   0x000026    program     static C:\Users\cadug\Desktop\Nova pasta\entrada-saida\software\main.X\main.asm
+
+

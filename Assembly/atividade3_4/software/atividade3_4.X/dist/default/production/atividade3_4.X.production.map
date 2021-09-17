@@ -1,0 +1,70 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Fri Jul 30 15:58:22 2021
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000100
+                   .cinit    romdata   0x000080    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/MAIN.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000081      
+                            0x002007    0x002007      
+            131 out of 8454 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             _.org_0_0008   0x000008    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+             _.org_0_000A   0x00000a    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+         checkDecrementar   0x000041    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+         checkIncrementar   0x000033    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                 checkMax   0x000056    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+              checkNumber   0x000076    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                checkZero   0x00004f    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+            confirmNumber   0x00005d    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                    conta   0x000002    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+        continueDecrement   0x000042    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+        continueIncrement   0x000034    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+              decrementar   0x00002f    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                 delay_ms   0x000001    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+           incrementPulse   0x000072    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+              incrementar   0x00002b    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                   inicio   0x00000e    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                     loop   0x000021    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                    pulse   0x000065    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+               secondLoop   0x000061    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 delay_ms   0x000001    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                    conta   0x000002    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+             _.org_0_0008   0x000008    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+             _.org_0_000A   0x00000a    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                   inicio   0x00000e    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                     loop   0x000021    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+              incrementar   0x00002b    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+              decrementar   0x00002f    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+         checkIncrementar   0x000033    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+        continueIncrement   0x000034    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+         checkDecrementar   0x000041    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+        continueDecrement   0x000042    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                checkZero   0x00004f    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                 checkMax   0x000056    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+            confirmNumber   0x00005d    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+               secondLoop   0x000061    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+                    pulse   0x000065    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+           incrementPulse   0x000072    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+              checkNumber   0x000076    program     static C:\Users\cadug\Desktop\MMC\atividade3_4\software\atividade3_4.X\main.asm
+
+

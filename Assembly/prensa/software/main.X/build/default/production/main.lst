@@ -1,0 +1,679 @@
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;*******************************************************************************
+                      00002 ; UFSC- Universidade Federal de Santa Catarina
+                      00003 ; Projeto: Exerc?cios
+                      00004 ; Autor: Roderval Marcelino
+                      00005 ;
+                      00006 ; Exercicio 02 - Prensa
+                      00007 ; Programa Prensa, aciona com dois bot?es simultaneamente, o pist?o desce por 2s
+                      00008 ; em seguida sobre por 2s. Um bot?o de emerg?ncia sobe o pist?o.
+                      00009 ; 
+                      00010 ; *******************************************************************************
+                      00011 
+                      00012 #include <P16F877A.INC>         ; Arquivo de include do uC usado, no caso PIC16F877A
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Jan 06 2020
+                      00005 ;  MPASM PIC16F877A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2020 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00567         LIST
+                      00013 
+                      00014 
+                      00015 
+                      00016 ; Palavra de configura??o, desabilita e habilita algumas op??es internas
+2007   3F39           00017   __CONFIG  _CP_OFF & _CPD_OFF & _DEBUG_OFF & _LVP_OFF & _WRT_OFF & _BODEN_OFF & _PWRTE_OFF & _WDT_OFF &
+                             _XT_OSC
+                      00018 
+                      00019 
+                      00020 ;***** defini??o de Vari?veis  *****************************
+                      00021 ;cria constantes para o programa
+                      00022 
+                      00023         cblock 0x20
+                      00024         
+  00000020            00025                 tempo0          
+  00000021            00026                 tempo1                  ; Vari?veis usadas na rotina de delay.
+  00000022            00027                 filtro
+  00000023            00028                 temp                    ; Vari?vel tempor?ria.
+  00000024            00029                 tempo2
+                      00030                                 
+                      00031         endc 
+                      00032         
+                      00033         cblock 0x70
+  00000070            00034                 work_temp
+  00000071            00035                 status_temp             ; Vari?veis usadas para salvar contexto no momento das interrup?
+                            ?es.
+  00000072            00036                 fsr_temp
+  00000073            00037                 pclath_temp
+                      00038                 
+                      00039         endc
+                      00040 
+                      00041 
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00042 
+                      00043 ;********* vari?veis de Entrada ************
+                      00044 #define     BT_EMG      PORTB,0         ; Est? ligada RB0 (Pino 33 do uC)
+                      00045 #define     BT_1        PORTB,1         ; Est? ligada RB1 (Pino 34 do uC)
+                      00046 #define     BT_2        PORTB,2         ; Est? ligada RB2 (Pino 35 do uC)
+                      00047 
+                      00048 
+                      00049 ;********* vari?veis de Sa?da ***************
+                      00050 #define     SOBE        PORTD,0         ; Sa?da ligada RD0 (Pino 19 do uC) 
+                      00051 #define     DESCE       PORTD,1         ; Sa?da ligada RD1 (Pino 20 do uC)
+                      00052 
+                      00053 
+                      00054 ;******** Vetor de Reset do uC**************
+                      00055  org 0x00                               ; Vetor de reset do uC.
+0000   2???           00056  goto inicio                        ; Desvia para o inicio do programa.
+                      00057 
+                      00058 ;******** Vetor de Interrup??es do uC **************
+                      00059  org 0x04                               ; Vetor de interrup??es do uC.
+                      00060 
+0004                  00061 salva_contexto:
+0004   00F0           00062         movwf   work_temp               ; Salva o registrador de trabalho
+0005   0E03           00063         swapf   STATUS,W                ; Salva o registrador de status
+0006   00F1           00064         movwf   status_temp
+0007   0804           00065         movf    FSR,W
+0008   00F2           00066         movwf   fsr_temp                ; Salva registrador FSR.
+0009   080A           00067         movf    PCLATH,W
+000A   00F3           00068         movwf   pclath_temp             ; Salva registrador PCLATH.
+000B   018A           00069         clrf    PCLATH                  ; Seleciona p?gina de mem?ria 0.
+000C   0183           00070         clrf    STATUS                  ; Seleciona banco de mem?ria 0.
+                      00071 
+000D   1C8B           00072         btfss   INTCON,INTF             ; Foi interrup??o externa pino RB0?
+000E   2???           00073         goto    sai_int                 ; N?o - Sai da interrup??o.
+                      00074 
+                      00075 
+                      00076 ; Tratamento da interrup??o de mudan?a de estado no PortB
+                      00077 
+                      00078 
+000F                  00079 int_rb0:
+000F   1088           00080         bcf     DESCE           ; Desce desliga
+0010   1408           00081         bsf     SOBE            ; Sobe prensa
+                      00082 
+0011   1C06           00083 volta:    btfss BT_EMG  ; Continua apetardo INT? Ent?o fica aqui
+0012   2???           00084               goto volta        
+                      00085 
+0013                  00086 sai_int_rb0:
+0013   108B           00087         bcf INTCON,INTF         ; Limpa flag da interrup??o de mudan?a de estado no PortB .
+                      00088 
+0014                  00089 sai_int
+0014   0873           00090         movf    pclath_temp,W
+0015   008A           00091         movwf   PCLATH          ; Recupera registrador PCLATH.
+0016   0872           00092         movf    fsr_temp,W
+0017   0084           00093         movwf   FSR             ; Recupera registrador FSR.
+0018   0E71           00094         swapf   status_temp,W
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0019   0083           00095         movwf   STATUS          ; Recupera registrador STATUS.
+001A   0EF0           00096         swapf   work_temp,F
+001B   0E70           00097         swapf   work_temp,W     ; Recupera registrador Work.
+001C   0009           00098  retfie
+                      00099 
+                      00100 
+                      00101 ;*************** Rotinas e Sub-Rotinas *****************************************
+                      00102 
+                      00103 ; Rotina de delay 
+001D                  00104 delay_ms:
+001D   00A4           00105         movwf   tempo2          
+001E   30FF           00106 conta:          movlw   .255
+001F   00A1           00107         movwf   tempo1          ; Carrega tempo1 (Unidade de ms).
+0020   30FF           00108         movlw   .255
+0021   00A0           00109         movwf   tempo0          ; Carrega tempo0 (Para contar 1ms).
+0022   0000           00110         nop                                     ; Perde tempo.
+0023   0BA0           00111         decfsz  tempo0,F        ; Fim de tempo0 ?
+0024   2???           00112         goto    $-2                     ; N?o - Volta duas instru??es.
+                      00113                                                 ; Sim - Passou-se 1ms.
+0025   0BA1           00114         decfsz  tempo1,F        ; Fim de tempo1 ?
+0026   2???           00115         goto    $-6                     ; N?o - Volta seis instru??es.
+                      00116         
+0027   0BA4           00117     decfsz tempo2, F
+0028   2???           00118     goto   conta
+                      00119                                 ; Sim.
+0029   0008           00120  return                         ; Retorna.
+                      00121 
+                      00122 
+                      00123 
+002A                  00124 trata_entrada:
+                      00125                 
+002A   1488           00126                 bsf     DESCE           ; Desce prensa
+002B   1008           00127                 bcf     SOBE            ; Sobe prensa
+002C   3008           00128                 movlw   .8
+002D   2???           00129                 call    delay_ms        ; Delay de 250 ms. Tempo para Acionar prensa
+                      00130                 
+                      00131                 
+002E   1088           00132                 bcf     DESCE           ; Desce desliga
+002F   1408           00133                 bsf     SOBE            ; Sobe prensa
+                      00134                 
+0030   0008           00135     return
+                      00136 
+                      00137 
+                      00138 
+                      00139 
+                      00140 
+                      00141 ;****************** Inicio do programa *****************************************
+                      00142 
+0031                  00143 inicio:
+0031   0185           00144         clrf    PORTA           ; Inicializa os Port's. Coloca todas pinos em 0.
+0032   0186           00145         clrf    PORTB
+0033   0187           00146         clrf    PORTC
+0034   0188           00147         clrf    PORTD
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0035   0189           00148         clrf    PORTE
+                      00149 
+0036   1683 1303      00150         banksel TRISA           ; Seleciona banco de mem?ria 1
+0038   3000           00151         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0039   0085           00152         movwf   TRISA           ; Configura PortA todas com sa?da
+003A   3007           00153         movlw   0x07
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+003B   0086           00154         movwf   TRISB           ; Configura PortB como entrada (RB0, RB1, RB2)
+003C   3000           00155         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+003D   0087           00156         movwf   TRISC           ; Configura PortC todas com sa?da
+003E   3000           00157         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+003F   0088           00158         movwf   TRISD           ; Configura PortD todas com sa?da
+0040   3000           00159         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0041   0089           00160         movwf   TRISE           ; Configura PortE todas com sa?da
+                      00161 
+0042   3000           00162         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0043   0081           00163         movwf   OPTION_REG      ; Configura Op??es:
+                      00164                                 ; Pull-Up habilitados.
+                      00165                                 ; Interrup??o na borda de subida do sinal no pino RB0.
+                      00166                                 ; Timer0 incrementado pelo oscilador interno.
+                      00167                                 ; Prescaler WDT 1:1.
+                      00168                                 ; Prescaler Timer0 1:2.
+                      00169 
+0044   3090           00170         movlw   0x90
+0045   008B           00171         movwf   INTCON          ; Habilita interrup??o RB0.
+                      00172 
+0046   3000           00173         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0047   008C           00174         movwf   PIE1            ; Desabilita interrup??es perif?ricas.
+                      00175 
+0048   3000           00176         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0049   008D           00177         movwf   PIE2            ; Desabilita interrup??es perif?ricas.
+                      00178 
+004A   3007           00179         movlw   0x07
+004B   009F           00180         movwf   ADCON0          ; Desliga conversor A/D, PortA e PortE com I/O digital.
+                      00181 
+004C   3007           00182         movlw   0x07
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+004D   009C           00183         movwf   CMCON           ; Desliga comparadores internos.
+                      00184 
+004E   3000           00185         movlw   0x00
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+004F   009D           00186         movwf   CVRCON          ; Desliga m?dulo de ref?rencia interna de tens?o.
+                      00187 
+0050   1283 1303      00188         banksel PORTA           ; Seleciona banco de mem?ria 0.
+                      00189 
+                      00190 
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00191 ;*********************** Loop principal ****************************************
+0052                  00192 loop:
+0052   1886           00193         btfsc   BT_1                ; Bot?o "1" foi acionado?
+0053   2???           00194         goto    loop                ; N?o - Volta uma instru??es.
+0054   1906           00195         btfsc   BT_2                ; Se sim, Bot?o "2" tamb?m foi acionado?
+0055   2???           00196         goto    loop        ; N?o - Volta tr?s instru??es.
+0056   2???           00197         call    trata_entrada       ; Se n?o, trata a a??o
+                      00198 
+0057   2???           00199         goto    loop                ; Vai para loop. Deixa lendo as entradas 
+                      00200 
+3F39                  00201     end                             ; Fim do Programa.
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADCS2                             00000006
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BRGH                              00000002
+BT_1                              PORTB,1
+BT_2                              PORTB,2
+BT_EMG                            PORTB,0
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2                             0000001B
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHS0                              00000003
+CHS1                              00000004
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CHS2                              00000005
+CIS                               00000003
+CKE                               00000006
+CKP                               00000004
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000009C
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            0000009D
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+D                                 00000005
+DATA_ADDRESS                      00000005
+DC                                00000001
+DESCE                             PORTD,1
+D_A                               00000005
+D_NOT_A                           00000005
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GCEN                              00000007
+GIE                               00000007
+GO                                00000002
+GO_DONE                           00000002
+GO_NOT_DONE                       00000002
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+IBF                               00000007
+IBOV                              00000005
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+INTF                              00000001
+IRP                               00000007
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000002
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OBF                               00000006
+OERR                              00000001
+OPTION_REG                        00000081
+P                                 00000004
+PCFG0                             00000000
+PCFG1                             00000001
+PCFG2                             00000002
+PCFG3                             00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSPIE                             00000007
+PSPIF                             00000007
+PSPMODE                           00000004
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RC0                               00000000
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RD0                               00000000
+RD1                               00000001
+RD2                               00000002
+RD3                               00000003
+RD4                               00000004
+RD5                               00000005
+RD6                               00000006
+RD7                               00000007
+RE0                               00000000
+RE1                               00000001
+RE2                               00000002
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SEN                               00000000
+SMP                               00000007
+SOBE                              PORTD,0
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000094
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000087
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+TRISC7                            00000007
+TRISD                             00000088
+TRISD0                            00000000
+TRISD1                            00000001
+TRISD2                            00000002
+TRISD3                            00000003
+TRISD4                            00000004
+TRISD5                            00000005
+TRISD6                            00000006
+TRISD7                            00000007
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRMT                              00000001
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+UA                                00000001
+W                                 00000000
+WCOL                              00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_.org_1_0024                      00000024
+_.org_1_0026                      00000026
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_ALL                           00001FFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         000037FF
+_DEVID1                           00002006
+_FOSC_EXTRC                       00003FFF
+_FOSC_HS                          00003FFE
+_FOSC_LP                          00003FFC
+_FOSC_XT                          00003FFD
+_HS_OSC                           00003FFE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_LP_OSC                           00003FFC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC                           00003FFF
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FFD
+__16F877A                         00000001
+conta                             0000001E
+delay_ms                          0000001D
+filtro                            00000022
+fsr_temp                          00000072
+inicio                            00000031
+int_rb0                           0000000F
+loop                              00000052
+pclath_temp                       00000073
+sai_int                           00000014
+sai_int_rb0                       00000013
+salva_contexto                    00000004
+status_temp                       00000071
+temp                              00000023
+tempo0                            00000020
+tempo1                            00000021
+tempo2                            00000024
+trata_entrada                     0000002A
+volta                             00000011
+MPASM 5.87                          MAIN.ASM   7-20-2021  14:08:03         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+work_temp                         00000070
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :    10 reported,     0 suppressed
+
+

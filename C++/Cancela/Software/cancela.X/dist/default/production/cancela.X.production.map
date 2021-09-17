@@ -1,0 +1,285 @@
+Microchip MPLAB XC8 Compiler V2.32
+
+Linker command line:
+
+-W-3 --edf=C:\Program Files\Microchip\xc8\v2.32\pic\dat\en_msgs.txt -cn \
+  -h+dist/default/production\cancela.X.production.sym \
+  --cmf=dist/default/production\cancela.X.production.cmf -z -Q16F877A \
+  -oC:\Users\cadug\AppData\Local\Temp\xcAs9i8.4 --defsym=__MPLAB_BUILD=1 \
+  -Mdist/default/production/cancela.X.production.map -E1 -ver=XC8 Compiler \
+  --acfsm=1493 -ASTACK=0110h-016Fh -pstack=STACK -ACODE=00h-07FFhx4 \
+  -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
+  -AENTRY=00h-0FFhx32 -ACOMMON=070h-07Fh -ABANK0=020h-06Fh \
+  -ABANK1=0A0h-0EFh -ABANK2=0110h-016Fh -ABANK3=0190h-01EFh \
+  -ARAM=020h-06Fh,0A0h-0EFh,0110h-016Fh,0190h-01EFh \
+  -AABS1=020h-07Fh,0A0h-0EFh,0110h-016Fh,0190h-01EFh -ASFR0=00h-01Fh \
+  -ASFR1=080h-09Fh -ASFR2=0100h-010Fh -ASFR3=0180h-018Fh \
+  -ACONFIG=02007h-02007h -DCONFIG=2 -AIDLOC=02000h-02003h -DIDLOC=2 \
+  -AEEDATA=00h-0FFh/02100h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
+  -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
+  -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pcinit=CODE \
+  -pfunctab=ENTRY -k C:\Users\cadug\AppData\Local\Temp\xcAs9i8.o \
+  dist/default/production\cancela.X.production.o 
+
+Object code version is 3.11
+
+Machine type is 16F877A
+
+
+
+                Name                               Link     Load   Length Selector   Space Scale
+C:\Users\cadug\AppData\Local\Temp\xcAs9i8.o
+                end_init                             10       10        3        8       0
+                reset_vec                             0        0        3        0       0
+dist/default/production\cancela.X.production.o
+                cinit                                13       13        6        8       0
+                intentry                              4        4        C        8       0
+                text4                                EB       EB       25        8       0
+                text3                                19       19       74        8       0
+                text2                               110      110       17        8       0
+                text1                                BC       BC       2F        8       0
+                maintext                             8D       8D       2F        8       0
+                cstackBANK0                          20       20        3       20       1
+                cstackCOMMON                         70       70        A       70       1
+                bssCOMMON                            7A       7A        2       70       1
+
+TOTAL           Name                               Link     Load   Length     Space
+        CLASS   STACK          
+
+        CLASS   CODE           
+                end_init                             10       10        3         0
+                cinit                                13       13        6         0
+                intentry                              4        4        C         0
+                reset_vec                             0        0        3         0
+                text4                                EB       EB       25         0
+                text3                                19       19       74         0
+                text2                               110      110       17         0
+                text1                                BC       BC       2F         0
+                maintext                             8D       8D       2F         0
+
+        CLASS   STRCODE        
+
+        CLASS   STRING         
+
+        CLASS   CONST          
+
+        CLASS   ENTRY          
+
+        CLASS   COMMON         
+                cstackCOMMON                         70       70        A         1
+                bssCOMMON                            7A       7A        2         1
+
+        CLASS   BANK0          
+                cstackBANK0                          20       20        3         1
+
+        CLASS   BANK1          
+
+        CLASS   BANK2          
+
+        CLASS   BANK3          
+
+        CLASS   RAM            
+
+        CLASS   ABS1           
+                abs_s1                               7E       7E        2         1
+
+        CLASS   SFR0           
+
+        CLASS   SFR1           
+
+        CLASS   SFR2           
+
+        CLASS   SFR3           
+
+        CLASS   CONFIG         
+
+        CLASS   IDLOC          
+
+        CLASS   EEDATA         
+
+
+
+SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
+
+                reset_vec                      000000  000003  000003         0       0  CODE        2
+                intentry                       000004  000123  000127         8       0  CODE        2
+                cstackBANK0                    000020  000003  000023        20       1  BANK0       1
+                cstackCOMMON                   000070  00000C  00007C        70       1  COMMON      1
+
+
+UNUSED ADDRESS RANGES
+
+        Name                Unused          Largest block    Delta
+        BANK0            023-06F            4D           1
+        BANK1            0A0-0EF            50           1
+        BANK2            110-16F            60           1
+        BANK3            190-1EF            60           1
+        CODE             003-003             1           2
+                         127-1FFF           800
+        COMMON           07C-07D             2           1
+        CONFIG           2007-2007             1           2
+        CONST            003-003             1           2
+                         127-1FFF           100
+        EEDATA           2100-21FF           100           2
+        ENTRY            003-003             1           2
+                         127-1FFF           100
+        IDLOC            2000-2003             4           2
+        RAM              023-06F            4D           1
+                         0A0-0EF            50
+                         110-16F            60
+                         190-1EF            60
+        SFR0             000-01F            20           1
+        SFR1             080-09F            20           1
+        SFR2             100-10F            10           1
+        SFR3             180-18F            10           1
+        STACK            110-16F            60           1
+        STRCODE          003-003             1           2
+                         127-1FFF          1ED9
+        STRING           003-003             1           2
+                         127-1FFF           100
+
+                                  Symbol Table
+
+_INTCONbits              (abs)        00B
+_INTF                    (abs)        059
+_OPTION_REG              (abs)        081
+_OPTION_REGbits          (abs)        081
+_PORTBbits               (abs)        006
+_PORTDbits               (abs)        008
+_TRISB                   (abs)        086
+_TRISD                   (abs)        088
+__Habs1                  abs1         000
+__Hbank0                 bank0        000
+__Hbank1                 bank1        000
+__Hbank2                 bank2        000
+__Hbank3                 bank3        000
+__HbssCOMMON             bssCOMMON    000
+__Hcinit                 cinit        019
+__Hclrtext               clrtext      000
+__Hcode                  code         000
+__Hcommon                common       000
+__HcstackBANK0           cstackBANK0  000
+__HcstackCOMMON          cstackCOMMON 000
+__Heeprom_data           eeprom_data  000
+__Hend_init              end_init     013
+__Hfunctab               functab      000
+__Hinit                  init         010
+__Hintentry              intentry     010
+__Hmaintext              maintext     000
+__Hpowerup               powerup      000
+__Hram                   ram          000
+__Hreset_vec             reset_vec    003
+__Hsfr0                  sfr0         000
+__Hsfr1                  sfr1         000
+__Hsfr2                  sfr2         000
+__Hsfr3                  sfr3         000
+__Hspace_0               (abs)        127
+__Hspace_1               (abs)        07C
+__Hspace_2               (abs)        000
+__Hspace_3               (abs)        000
+__Hstack                 stack        000
+__Hstrings               strings      000
+__Htext                  text         000
+__Labs1                  abs1         000
+__Lbank0                 bank0        000
+__Lbank1                 bank1        000
+__Lbank2                 bank2        000
+__Lbank3                 bank3        000
+__LbssCOMMON             bssCOMMON    000
+__Lcinit                 cinit        013
+__Lclrtext               clrtext      000
+__Lcode                  code         000
+__Lcommon                common       000
+__LcstackBANK0           cstackBANK0  000
+__LcstackCOMMON          cstackCOMMON 000
+__Leeprom_data           eeprom_data  000
+__Lend_init              end_init     010
+__Lfunctab               functab      000
+__Linit                  init         010
+__Lintentry              intentry     004
+__Lmaintext              maintext     000
+__Lpowerup               powerup      000
+__Lram                   ram          000
+__Lreset_vec             reset_vec    000
+__Lsfr0                  sfr0         000
+__Lsfr1                  sfr1         000
+__Lsfr2                  sfr2         000
+__Lsfr3                  sfr3         000
+__Lspace_0               (abs)        000
+__Lspace_1               (abs)        000
+__Lspace_2               (abs)        000
+__Lspace_3               (abs)        000
+__Lstack                 stack        000
+__Lstrings               strings      000
+__Ltext                  text         000
+__S0                     (abs)        127
+__S1                     (abs)        07C
+__S2                     (abs)        000
+__S3                     (abs)        000
+___int_sp                stack        000
+___latbits               (abs)        002
+___sp                    stack        000
+___stackhi               (abs)        000
+___stacklo               (abs)        000
+__end_of__initialization cinit        015
+__end_of_abrirCancela    text1        0EB
+__end_of_fecharCancela   text2        127
+__end_of_luzesPiscando   text4        110
+__end_of_main            maintext     0BC
+__end_of_trem            text3        08D
+__initialization         cinit        013
+__pbssCOMMON             bssCOMMON    07A
+__pcstackBANK0           cstackBANK0  020
+__pcstackCOMMON          cstackCOMMON 070
+__pintentry              intentry     004
+__pmaintext              maintext     08D
+__ptext1                 text1        0BC
+__ptext2                 text2        110
+__ptext3                 text3        019
+__ptext4                 text4        0EB
+__size_of_abrirCancela   (abs)        000
+__size_of_fecharCancela  (abs)        000
+__size_of_luzesPiscando  (abs)        000
+__size_of_main           (abs)        000
+__size_of_trem           (abs)        000
+_abrirCancela            text1        0BC
+_fecharCancela           text2        110
+_flag                    bssCOMMON    07A
+_luzesPiscando           text4        0EB
+_main                    maintext     08D
+_trem                    text3        019
+btemp                    (abs)        07E
+end_of_initialization    cinit        015
+interrupt_function       intentry     004
+intlevel0                functab      000
+intlevel1                functab      000
+intlevel2                functab      000
+intlevel3                functab      000
+intlevel4                functab      000
+intlevel5                functab      000
+reset_vec                reset_vec    000
+saved_w                  (abs)        07E
+start                    init         010
+start_initialization     cinit        013
+trem@i                   cstackCOMMON 076
+trem@i_186               cstackCOMMON 078
+wtemp0                   (abs)        07E
+
+
+MODULE INFORMATION
+
+Module		Function		Class		Link	Load	Size
+shared
+		__initialization		CODE           	0013	0000	2
+
+shared estimated size: 2
+
+main.c
+		_main          		CODE           	008D	0000	47
+		_luzesPiscando 		CODE           	00EB	0000	37
+		_trem          		CODE           	0019	0000	116
+		_abrirCancela  		CODE           	00BC	0000	47
+		_fecharCancela 		CODE           	0110	0000	23
+
+main.c estimated size: 270
+
